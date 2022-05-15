@@ -265,6 +265,49 @@ odds after reversing: [11, 7, 5, 3]
 ~~~
 {: .output}
 
+> ## EXERCISE: Overloading
+>
+> `+` usually means addition, but when used on strings or lists, it means "concatenate".
+> Given that, what do you think the multiplication operator `*` does on lists?
+> In particular, what will be the output of the following code?
+>
+> ~~~
+> counts = [2, 4, 6, 8, 10]
+> repeats = counts * 2
+> print(repeats)
+> ~~~
+> {: .language-python}
+>
+> 1.  `[2, 4, 6, 8, 10, 2, 4, 6, 8, 10]`
+> 2.  `[4, 8, 12, 16, 20]`
+> 3.  `[[2, 4, 6, 8, 10],[2, 4, 6, 8, 10]]`
+> 4.  `[2, 4, 6, 8, 10, 4, 8, 12, 16, 20]`
+>
+> The technical term for this is *operator overloading*:
+> a single operator, like `+` or `*`,
+> can do different things depending on what it's applied to.
+>
+> > ## Solution
+> >
+> > The multiplication operator `*` used on a list replicates elements of the list and concatenates
+> > them together:
+> >
+> > ~~~
+> > [2, 4, 6, 8, 10, 2, 4, 6, 8, 10]
+> > ~~~
+> > {: .output}
+> >
+> > It's equivalent to:
+> >
+> > ~~~
+> > counts + counts
+> > ~~~
+> > {: .language-python}
+> {: .solution}
+{: .challenge}
+
+
+
 While modifying in place, it is useful to remember that Python treats lists in a slightly
 counter-intuitive way.
 
@@ -335,7 +378,7 @@ last: 4
 ~~~
 {: .output}
 
-> ## Slicing From the End
+> ## INFO: Slicing From the End
 >
 > Use slicing to access only the last four characters of a string or entries of a list.
 >
@@ -373,7 +416,7 @@ last: 4
 > {: .solution}
 {: .challenge}
 
-> ## Non-Continuous Slices
+> ## EXERCISE: Non-Continuous Slices
 >
 > So far we've seen how to use slicing to take single blocks
 > of successive entries from a sequence.
@@ -491,46 +534,7 @@ Omitting ending index: ['sep', 'oct', 'nov', 'dec']
 ~~~
 {: .output}
 
-> ## Overloading
->
-> `+` usually means addition, but when used on strings or lists, it means "concatenate".
-> Given that, what do you think the multiplication operator `*` does on lists?
-> In particular, what will be the output of the following code?
->
-> ~~~
-> counts = [2, 4, 6, 8, 10]
-> repeats = counts * 2
-> print(repeats)
-> ~~~
-> {: .language-python}
->
-> 1.  `[2, 4, 6, 8, 10, 2, 4, 6, 8, 10]`
-> 2.  `[4, 8, 12, 16, 20]`
-> 3.  `[[2, 4, 6, 8, 10],[2, 4, 6, 8, 10]]`
-> 4.  `[2, 4, 6, 8, 10, 4, 8, 12, 16, 20]`
->
-> The technical term for this is *operator overloading*:
-> a single operator, like `+` or `*`,
-> can do different things depending on what it's applied to.
->
-> > ## Solution
-> >
-> > The multiplication operator `*` used on a list replicates elements of the list and concatenates
-> > them together:
-> >
-> > ~~~
-> > [2, 4, 6, 8, 10, 2, 4, 6, 8, 10]
-> > ~~~
-> > {: .output}
-> >
-> > It's equivalent to:
-> >
-> > ~~~
-> > counts + counts
-> > ~~~
-> > {: .language-python}
-> {: .solution}
-{: .challenge}
+
 
 [hadleywickham-tweet]: https://twitter.com/hadleywickham/status/643381054758363136
 

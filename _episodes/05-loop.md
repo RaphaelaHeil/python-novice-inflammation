@@ -163,6 +163,31 @@ want to run inside the loop. Unlike many other languages, there is no command to
 of the loop body (e.g. `end for`); what is indented after the `for` statement belongs to the loop.
 
 
+> ## EXERCISE: Understanding the loops
+>
+> Given the following loop:
+> ~~~
+> word = 'oxygen'
+> for char in word:
+>     print(char)
+> ~~~
+> {: .language-python}
+>
+> How many times is the body of the loop executed?
+>
+> * 3 times
+> * 4 times
+> * 5 times
+> * 6 times
+>
+> > ## Solution
+> >
+> > The body of the loop is executed 6 times.
+> >
+> {: .solution}
+{: .challenge}
+
+
 > ## What's in a name?
 >
 >
@@ -227,6 +252,24 @@ since there is nothing left in `names` for Python to process,
 the loop finishes
 and the `print` function on line 5 tells us our final answer.
 
+> ## EXERCISE: Summing a list
+>
+> Write a loop that calculates the sum of elements in a list
+> by adding each element and printing the final value,
+> so `[124, 402, 36]` prints 562
+>
+> > ## Solution
+> > ~~~
+> > numbers = [124, 402, 36]
+> > summed = 0
+> > for num in numbers:
+> >     summed = summed + num
+> > print(summed)
+> > ~~~
+> > {: .language-python}
+> {: .solution}
+{: .challenge}
+
 Note that a loop variable is a variable that is being used to record progress in a loop.
 It still exists after the loop is over,
 and we can re-use variables previously defined as loop variables as well:
@@ -265,7 +308,7 @@ and much easier to read than a two-line loop;
 it will also give us the length of many other things that we haven't met yet,
 so we should always use it when we can.
 
-> ## From 1 to N
+> ## EXERCISE: From 1 to N
 >
 > Python has a built-in function called `range` that generates a sequence of numbers. `range` can
 > accept 1, 2, or 3 parameters.
@@ -302,33 +345,11 @@ so we should always use it when we can.
 
 
 
-> ## Understanding the loops
->
-> Given the following loop:
-> ~~~
-> word = 'oxygen'
-> for char in word:
->     print(char)
-> ~~~
-> {: .language-python}
->
-> How many times is the body of the loop executed?
->
-> * 3 times
-> * 4 times
-> * 5 times
-> * 6 times
->
-> > ## Solution
-> >
-> > The body of the loop is executed 6 times.
-> >
-> {: .solution}
-{: .challenge}
 
 
 
-> ## Computing Powers With Loops
+
+> ## INFO: Computing Powers With Loops
 >
 > Exponentiation is built into Python:
 >
@@ -356,25 +377,9 @@ so we should always use it when we can.
 > {: .solution}
 {: .challenge}
 
-> ## Summing a list
->
-> Write a loop that calculates the sum of elements in a list
-> by adding each element and printing the final value,
-> so `[124, 402, 36]` prints 562
->
-> > ## Solution
-> > ~~~
-> > numbers = [124, 402, 36]
-> > summed = 0
-> > for num in numbers:
-> >     summed = summed + num
-> > print(summed)
-> > ~~~
-> > {: .language-python}
-> {: .solution}
-{: .challenge}
 
-> ## Computing the Value of a Polynomial
+
+> ## INFO: Computing the Value of a Polynomial
 >
 > The built-in function `enumerate` takes a sequence (e.g. a [list]({{ page.root }}/04-lists/)) and
 > generates a new sequence of the same length. Each element of the new sequence is a pair composed

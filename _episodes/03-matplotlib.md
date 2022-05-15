@@ -175,7 +175,7 @@ formats, including SVG, PDF, and JPEG.
 > is important you agree on how libraries are imported.
 {: .callout}
 
-> ## Plot Scaling
+> ## INFO: Plot Scaling
 >
 > Why do all of our plots stop just short of the upper end of our graph?
 >
@@ -217,7 +217,7 @@ formats, including SVG, PDF, and JPEG.
 > {: .solution}
 {: .challenge}
 
-> ## Drawing Straight Lines
+> ## INFO: Drawing Straight Lines
 >
 > In the center and right subplots above, we expect all lines to look like step functions because
 > non-integer value are not realistic for the minimum and maximum values. However, you can see
@@ -259,7 +259,7 @@ formats, including SVG, PDF, and JPEG.
 > {: .solution}
 {: .challenge}
 
-> ## Make Your Own Plot
+> ## INFO: Make Your Own Plot
 >
 > Create a plot showing the standard deviation (`numpy.std`)
 > of the inflammation data for each day across all patients.
@@ -273,7 +273,7 @@ formats, including SVG, PDF, and JPEG.
 > {: .solution}
 {: .challenge}
 
-> ## Moving Plots Around
+> ## INFO: Moving Plots Around
 >
 > Modify the program to display the three plots on top of one another
 > instead of side by side.

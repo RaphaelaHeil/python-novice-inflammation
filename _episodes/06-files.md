@@ -129,7 +129,7 @@ trial. In addition, we can see that the last patient in the study didn't have an
 flare-ups at all throughout the trial, suggesting that they may not even suffer from arthritis!
 
 
-> ## Plotting Differences
+> ## INFO: Plotting Differences
 >
 > Plot the difference between the average inflammations reported in the first and second datasets
 > (stored in `inflammation-01.csv` and `inflammation-02.csv`, correspondingly),
@@ -158,7 +158,7 @@ flare-ups at all throughout the trial, suggesting that they may not even suffer 
 > {: .solution}
 {: .challenge}
 
-> ## Generate Composite Statistics
+> ## INFO: Generate Composite Statistics
 >
 > Use each of the files once to generate a dataset containing values averaged over all patients:
 >

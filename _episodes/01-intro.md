@@ -238,7 +238,7 @@ stuck on it](../fig/python-sticky-note-variables-03.svg)
 {: .callout}
 
 
-> ## Check Your Understanding
+> ## EXERCISE: Check Your Understanding
 >
 > What values do the variables `mass` and `age` have after each of the following statements?
 > Test your answer by executing the lines.
@@ -262,7 +262,7 @@ stuck on it](../fig/python-sticky-note-variables-03.svg)
 > {: .solution}
 {: .challenge}
 
-> ## Sorting Out References
+> ## INFO: Sorting Out References
 >
 > Python allows you to assign multiple values to multiple variables in one line by separating
 > the variables and values with commas. What does the following program print out?
@@ -282,7 +282,7 @@ stuck on it](../fig/python-sticky-note-variables-03.svg)
 > {: .solution}
 {: .challenge}
 
-> ## Seeing Data Types
+> ## INFO: Seeing Data Types
 >
 > What are the data types of the following variables?
 >
