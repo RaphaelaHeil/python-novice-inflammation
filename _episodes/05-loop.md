@@ -15,32 +15,19 @@ keypoints:
 - "Use `len(thing)` to determine the length of something that contains other values."
 ---
 
-In the episode about visualizing data,
-we wrote Python code that plots values of interest from our first
-inflammation dataset (`inflammation-01.csv`), which revealed some suspicious features in it.
+- previously, we made some plots for `inflammation-01.csv`
+- we have lots more files
+- create plots for all of them 
+- repeat the plotting but not manually!
 
-![Line graphs showing average, maximum and minimum inflammation across all patients over a 40-day
-period.](../fig/03-loop_2_0.png)
-
-We have a dozen data sets right now and potentially more on the way if Dr. Maverick
-can keep up their surprisingly fast clinical trial rate. We want to create plots for all of
-our data sets with a single statement. To do that, we'll have to teach the computer how to
-repeat things.
-
-An example task that we might want to repeat is accessing numbers in a list,
-which we
-will do by printing each number on a line of its own.
+- first example: access numbers in a list
 
 ~~~
 odds = [1, 3, 5, 7]
 ~~~
 {: .language-python}
 
-In Python, a list is basically an ordered collection of elements, and every
-element has a unique number associated with it --- its index. This means that
-we can access elements in a list using their indices.
-For example, we can get the first number in the list `odds`,
-by using `odds[0]`. One way to print each number is to use four `print` statements:
+- four `print` statements:
 
 ~~~
 print(odds[0])
@@ -101,7 +88,10 @@ IndexError: list index out of range
 ~~~
 {: .error}
 
-Here's a better approach: a [for loop]({{ page.root }}/reference.html#for-loop)
+
+- better: for loop
+- similar syntax as yesterday with the shell but without do and done
+- **beware the indentation!!!**
 
 ~~~
 odds = [1, 3, 5, 7]
@@ -118,8 +108,7 @@ for num in odds:
 ~~~
 {: .output}
 
-This is shorter --- certainly shorter than something that prints every number in a
-hundred-number list --- and more robust as well:
+- shorter and more robust! 
 
 ~~~
 odds = [1, 3, 5, 7, 9, 11]
@@ -153,14 +142,34 @@ Using the odds example above, the loop might look like this:
 ![Loop variable 'num' being assigned the value of each element in the list `odds` in turn and
 then being printed](../fig/05-loops_image_num.png)
 
-where each number (`num`) in the variable `odds` is looped through and printed one number after
-another. The other numbers in the diagram denote which loop cycle the number was printed in (1
-being the first loop cycle, and 6 being the final loop cycle).
+- loop variable can be called anything we like
+- mus end in a colon
+- indent
+- loop body stops where the indentation stops
 
-We can call the [loop variable]({{ page.root }}/reference.html#loop-variable) anything we like, but
-there must be a colon at the end of the line starting the loop, and we must indent anything we
-want to run inside the loop. Unlike many other languages, there is no command to signify the end
-of the loop body (e.g. `end for`); what is indented after the `for` statement belongs to the loop.
+> ## EXERCISE: Understanding the loops
+>
+> Given the following loop:
+> ~~~
+> word = 'oxygen'
+> for char in word:
+>     print(char)
+> ~~~
+> {: .language-python}
+>
+> How many times is the body of the loop executed?
+>
+> * 3 times
+> * 4 times
+> * 5 times
+> * 6 times
+>
+> > ## Solution
+> >
+> > The body of the loop is executed 6 times.
+> >
+> {: .solution}
+{: .challenge}
 
 
 > ## What's in a name?
@@ -209,27 +218,8 @@ There are 3 names in the list.
 ~~~
 {: .output}
 
-It's worth tracing the execution of this little program step by step.
-Since there are three names in `names`,
-the statement on line 4 will be executed three times.
-The first time around,
-`length` is zero (the value assigned to it on line 1)
-and `value` is `Curie`.
-The statement adds 1 to the old value of `length`,
-producing 1,
-and updates `length` to refer to that new value.
-The next time around,
-`value` is `Darwin` and `length` is 1,
-so `length` is updated to be 2.
-After one more update,
-`length` is 3;
-since there is nothing left in `names` for Python to process,
-the loop finishes
-and the `print` function on line 5 tells us our final answer.
-
-Note that a loop variable is a variable that is being used to record progress in a loop.
-It still exists after the loop is over,
-and we can re-use variables previously defined as loop variables as well:
+- trace the execution of the loop step by step
+- Note that a loop variable is a variable that is being used to record progress in a loop. It still exists after the loop is over, and we can re-use variables previously defined as loop variables as well:
 
 ~~~
 name = 'Rosalind'
@@ -247,8 +237,8 @@ after the loop, name is Turing
 ~~~
 {: .output}
 
-Note also that finding the length of an object is such a common operation
-that Python actually has a built-in function to do it called `len`:
+- this allows us to find the length
+- there is also a built-in method, since this is such a common operation `len`:
 
 ~~~
 print(len([0, 1, 2, 3]))
@@ -260,12 +250,11 @@ print(len([0, 1, 2, 3]))
 ~~~
 {: .output}
 
-`len` is much faster than any function we could write ourselves,
-and much easier to read than a two-line loop;
-it will also give us the length of many other things that we haven't met yet,
-so we should always use it when we can.
+- `len` is much faster than any function we could write ourselves,
+- easier to read
+- works for many other things as well that you will meet in the future
 
-> ## From 1 to N
+> ## EXERCISE: From 1 to N
 >
 > Python has a built-in function called `range` that generates a sequence of numbers. `range` can
 > accept 1, 2, or 3 parameters.
@@ -301,34 +290,25 @@ so we should always use it when we can.
 
 
 
-
-> ## Understanding the loops
+> ## EXERCISE: Summing a list
 >
-> Given the following loop:
-> ~~~
-> word = 'oxygen'
-> for char in word:
->     print(char)
-> ~~~
-> {: .language-python}
->
-> How many times is the body of the loop executed?
->
-> * 3 times
-> * 4 times
-> * 5 times
-> * 6 times
+> Write a loop that calculates the sum of elements in a list
+> by adding each element and printing the final value,
+> so `[124, 402, 36]` prints 562
 >
 > > ## Solution
-> >
-> > The body of the loop is executed 6 times.
-> >
+> > ~~~
+> > numbers = [124, 402, 36]
+> > summed = 0
+> > for num in numbers:
+> >     summed = summed + num
+> > print(summed)
+> > ~~~
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
 
-
-
-> ## Computing Powers With Loops
+> ## INFO: Computing Powers With Loops
 >
 > Exponentiation is built into Python:
 >
@@ -356,25 +336,7 @@ so we should always use it when we can.
 > {: .solution}
 {: .challenge}
 
-> ## Summing a list
->
-> Write a loop that calculates the sum of elements in a list
-> by adding each element and printing the final value,
-> so `[124, 402, 36]` prints 562
->
-> > ## Solution
-> > ~~~
-> > numbers = [124, 402, 36]
-> > summed = 0
-> > for num in numbers:
-> >     summed = summed + num
-> > print(summed)
-> > ~~~
-> > {: .language-python}
-> {: .solution}
-{: .challenge}
-
-> ## Computing the Value of a Polynomial
+> ## INFO: Computing the Value of a Polynomial
 >
 > The built-in function `enumerate` takes a sequence (e.g. a [list]({{ page.root }}/04-lists/)) and
 > generates a new sequence of the same length. Each element of the new sequence is a pair composed
