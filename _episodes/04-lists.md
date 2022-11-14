@@ -20,15 +20,24 @@ list[2:9]), in the same way as strings and arrays."
 - "Strings are immutable (i.e., the characters in them cannot be changed)."
 ---
 
-- motivation: 
-  - lots of things to keep in lists
-  - built-in in Python standard library, i.e. no need for numpy
-  - many things are too trivial for numpy arrays
+In the previous episode, we analyzed a single file of clinical trial inflammation data. However,
+after finding some peculiar and potentially suspicious trends in the trial data we ask
+Dr. Maverick if they have performed any other clinical trials. Surprisingly, they say that they
+have and provide us with 11 more CSV files for a further 11 clinical trials they have undertaken
+since the initial trial.
+
+Our goal now is to process all the inflammation data we have, which means that we still have
+eleven more files to go!
+
+The natural first step is to collect the names of all the files that we have to process. In Python,
+a list is a way to store multiple values together. In this episode, we will learn how to store
+multiple values in a list as well as how to work with lists.
 
 ## Python lists
 
-- built-in so no need to load anything
-- put values into square brackets, comma-separated
+Unlike NumPy arrays, lists are built into the language so we do not have to load a library
+to use them.
+We create a list by putting values inside square brackets and separating the values with commas:
 
 ~~~
 odds = [1, 3, 5, 7]
@@ -41,7 +50,8 @@ odds are: [1, 3, 5, 7]
 ~~~
 {: .output}
 
-- access via indices, same as with arrays
+We can access elements of a list using indices -- numbered positions of elements in the list.
+These positions are numbered starting at 0, so the first element has an index of 0.
 
 ~~~
 print('first element:', odds[0])
@@ -57,15 +67,14 @@ last element: 7
 ~~~
 {: .output}
 
-- negative indices
-  - `-1` last element
-  - `-2` second to last, etc.
-- `odds[3]` and `odds[-1]` point to the same element here.
+Yes, we can use negative numbers as indices in Python. When we do so, the index `-1` gives us the
+last element in the list, `-2` the second to last, and so on.
+Because of this, `odds[3]` and `odds[-1]` point to the same element here.
 
-- important difference: 
-  - values in lists can be changed
-  - characters in strings cannot be changed
-  - terminology: mutable vs immutable
+There is one important difference between lists and strings:
+we can change the values in a list,
+but we cannot change individual characters in a string.
+For example:
 
 ~~~
 names = ['Curie', 'Darwing', 'Turing']  # typo in Darwin's name
@@ -104,6 +113,17 @@ does not.
 
 > ## Ch-Ch-Ch-Ch-Changes
 >
+> Data which can be modified in place is called [mutable]({{ page.root }}/reference.html#mutable),
+> while data which cannot be modified is called
+> [immutable]({{ page.root }}/reference.html#immutable).
+> Strings and numbers are immutable. This does not mean that variables with string or number values
+> are constants, but when we want to change the value of a string or number variable, we can only
+> replace the old value with a completely new value.
+>
+> Lists and arrays, on the other hand, are mutable: we can modify them after they have been
+> created. We can change individual elements, append new elements, or reorder the whole list. For
+> some operations, like sorting, we can choose whether to use a function that modifies the data
+> in-place or a function that returns a modified copy and leaves the original unchanged.
 >
 > Be careful when modifying data in-place. If two variables refer to the same list, and you modify
 > the list value, it will change for both variables!
@@ -154,6 +174,49 @@ does not.
 >      ['apple', 'pear', 'banana']]
 > ~~~
 > {: .language-python}
+>
+> Here is a visual example of how indexing a list of lists `x` works:
+>
+> [![x is represented as a pepper shaker containing several packets of pepper. [x[0]] is represented
+> as a pepper shaker containing a single packet of pepper. x[0] is represented as a single packet of
+> pepper. x[0][0] is represented as single grain of pepper.  Adapted
+> from @hadleywickham.](../fig/indexing_lists_python.png)][hadleywickham-tweet]
+>
+> Using the previously declared list `x`, these would be the results of the
+> index operations shown in the image:
+>
+> ~~~
+> print([x[0]])
+> ~~~
+> {: .language-python}
+>
+> ~~~
+> [['pepper', 'zucchini', 'onion']]
+> ~~~
+> {: .output}
+>
+> ~~~
+> print(x[0])
+> ~~~
+> {: .language-python}
+>
+> ~~~
+> ['pepper', 'zucchini', 'onion']
+> ~~~
+> {: .output}
+>
+> ~~~
+> print(x[0][0])
+> ~~~
+> {: .language-python}
+>
+> ~~~
+> 'pepper'
+> ~~~
+> {: .output}
+>
+> Thanks to [Hadley Wickham][hadleywickham-tweet]
+> for the image above.
 {: .callout}
 
 > ## Heterogeneous Lists
@@ -202,49 +265,6 @@ odds after reversing: [11, 7, 5, 3]
 ~~~
 {: .output}
 
-> ## EXERCISE: Overloading (more modifying)
->
-> `+` usually means addition, but when used on strings or lists, it means "concatenate".
-> Given that, what do you think the multiplication operator `*` does on lists?
-> In particular, what will be the output of the following code?
->
-> ~~~
-> counts = [2, 4, 6, 8, 10]
-> repeats = counts * 2
-> print(repeats)
-> ~~~
-> {: .language-python}
->
-> 1.  `[2, 4, 6, 8, 10, 2, 4, 6, 8, 10]`
-> 2.  `[4, 8, 12, 16, 20]`
-> 3.  `[[2, 4, 6, 8, 10],[2, 4, 6, 8, 10]]`
-> 4.  `[2, 4, 6, 8, 10, 4, 8, 12, 16, 20]`
->
-> The technical term for this is *operator overloading*:
-> a single operator, like `+` or `*`,
-> can do different things depending on what it's applied to.
->
-> > ## Solution
-> >
-> > The multiplication operator `*` used on a list replicates elements of the list and concatenates
-> > them together:
-> >
-> > ~~~
-> > [2, 4, 6, 8, 10, 2, 4, 6, 8, 10]
-> > ~~~
-> > {: .output}
-> >
-> > It's equivalent to:
-> >
-> > ~~~
-> > counts + counts
-> > ~~~
-> > {: .language-python}
-> {: .solution}
-{: .challenge}
-
-
-
 While modifying in place, it is useful to remember that Python treats lists in a slightly
 counter-intuitive way.
 
@@ -268,9 +288,8 @@ odds: [3, 5, 7, 2]
 {: .output}
 
 This is because Python stores a list in memory, and then can use multiple names to refer to the
-same list. 
-
-- for simple lists: use `list()` to create a copy
+same list. If all we want to do is copy a (simple) list, we can again use the `list` function, so we
+do not modify a list we did not mean to:
 
 ~~~
 odds = [3, 5, 7]
@@ -287,8 +306,9 @@ odds: [3, 5, 7]
 ~~~
 {: .output}
 
-- the return of the slicer :D 
-- as with arrays, we can specify ranges to access values
+Subsets of lists and strings can be accessed by specifying ranges of values in brackets,
+similar to how we accessed ranges of positions in a NumPy array.
+This is commonly referred to as "slicing" the list/string.
 
 ~~~
 binomial_name = 'Drosophila melanogaster'
@@ -315,7 +335,7 @@ last: 4
 ~~~
 {: .output}
 
-> ## INFO: Slicing From the End
+> ## Slicing From the End
 >
 > Use slicing to access only the last four characters of a string or entries of a list.
 >
@@ -353,7 +373,7 @@ last: 4
 > {: .solution}
 {: .challenge}
 
-> ## EXERCISE: Non-Continuous Slices
+> ## Non-Continuous Slices
 >
 > So far we've seen how to use slicing to take single blocks
 > of successive entries from a sequence.
@@ -471,7 +491,46 @@ Omitting ending index: ['sep', 'oct', 'nov', 'dec']
 ~~~
 {: .output}
 
-
+> ## Overloading
+>
+> `+` usually means addition, but when used on strings or lists, it means "concatenate".
+> Given that, what do you think the multiplication operator `*` does on lists?
+> In particular, what will be the output of the following code?
+>
+> ~~~
+> counts = [2, 4, 6, 8, 10]
+> repeats = counts * 2
+> print(repeats)
+> ~~~
+> {: .language-python}
+>
+> 1.  `[2, 4, 6, 8, 10, 2, 4, 6, 8, 10]`
+> 2.  `[4, 8, 12, 16, 20]`
+> 3.  `[[2, 4, 6, 8, 10],[2, 4, 6, 8, 10]]`
+> 4.  `[2, 4, 6, 8, 10, 4, 8, 12, 16, 20]`
+>
+> The technical term for this is *operator overloading*:
+> a single operator, like `+` or `*`,
+> can do different things depending on what it's applied to.
+>
+> > ## Solution
+> >
+> > The multiplication operator `*` used on a list replicates elements of the list and concatenates
+> > them together:
+> >
+> > ~~~
+> > [2, 4, 6, 8, 10, 2, 4, 6, 8, 10]
+> > ~~~
+> > {: .output}
+> >
+> > It's equivalent to:
+> >
+> > ~~~
+> > counts + counts
+> > ~~~
+> > {: .language-python}
+> {: .solution}
+{: .challenge}
 
 [hadleywickham-tweet]: https://twitter.com/hadleywickham/status/643381054758363136
 

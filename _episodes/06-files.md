@@ -12,16 +12,20 @@ keypoints:
 - "Use `*` in a pattern to match zero or more characters, and `?` to match any single character."
 ---
 
-- before we wrap up for today, let's combine a lot of the things we have learnt so far
-- to get a list of all the files in our data directory, use another library `glob`
-- everything that starts with `inflammation` and ends with `.csv`
-
+As a final piece to processing our inflammation data, we need a way to get a list of all the files
+in our `data` directory whose names start with `inflammation-` and end with `.csv`.
+The following library will help us to achieve this:
 ~~~
 import glob
 ~~~
 {: .language-python}
 
-- use glob.glob and combine with wildcards, like in the shell
+The `glob` library contains a function, also called `glob`,
+that finds files and directories whose names match a pattern.
+We provide those patterns as strings:
+the character `*` matches zero or more characters,
+while `?` matches any one character.
+We can use this to get the names of all the CSV files in the current directory:
 
 ~~~
 print(glob.glob('inflammation*.csv'))
@@ -35,8 +39,15 @@ print(glob.glob('inflammation*.csv'))
 ~~~
 {: .output}
 
-- glob returns in arbitrary order
-- output can be sorted
+As these examples show,
+`glob.glob`'s result is a list of file and directory paths in arbitrary order.
+This means we can loop over it
+to do something with each filename in turn.
+In our case,
+the "something" we want to do is generate a set of plots for each file in our inflammation dataset.
+
+If we want to start by analyzing just the first three files in alphabetical order, we can use the
+`sorted` built-in function to generate a new sorted list from the `glob.glob` output:
 
 ~~~
 import glob
@@ -118,7 +129,7 @@ trial. In addition, we can see that the last patient in the study didn't have an
 flare-ups at all throughout the trial, suggesting that they may not even suffer from arthritis!
 
 
-> ## INFO: Plotting Differences
+> ## Plotting Differences
 >
 > Plot the difference between the average inflammations reported in the first and second datasets
 > (stored in `inflammation-01.csv` and `inflammation-02.csv`, correspondingly),
@@ -147,7 +158,7 @@ flare-ups at all throughout the trial, suggesting that they may not even suffer 
 > {: .solution}
 {: .challenge}
 
-> ## INFO: Generate Composite Statistics
+> ## Generate Composite Statistics
 >
 > Use each of the files once to generate a dataset containing values averaged over all patients:
 >
@@ -228,5 +239,8 @@ poor-quality dataset a few times to try and make all the trials seem a bit more 
 Congratulations! We've investigated the inflammation data and proven that the datasets have been
 synthetically generated.
 
+But it would be a shame to throw away the synthetic datasets that have taught us so much
+already, so we'll forgive the imaginary Dr. Maverick and continue to use the data to learn
+how to program.
 
 {% include links.md %}
