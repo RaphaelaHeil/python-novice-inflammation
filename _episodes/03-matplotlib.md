@@ -13,26 +13,12 @@ keypoints:
 ---
 
 ## Visualizing data
-The mathematician Richard Hamming once said, "The purpose of computing is insight, not numbers,"
-and the best way to develop insight is often to visualize data.  Visualization deserves an entire
-lecture of its own, but we can explore a few features of Python's `matplotlib` library here.  While
-there is no official plotting library, `matplotlib` is the _de facto_ standard.  First, we will
-import the `pyplot` module from `matplotlib` and use two of its functions to create and display a
-[heat map]({{ page.root }}/reference.html#heat-map) of our data:
 
-> ## Episode Prerequisites
->
-> If you are continuing in the same notebook from the previous episode, you already
-> have a `data` variable and have imported `numpy`.  If you are starting a new 
-> notebook at this point, you need the following two lines:
->
-> ~~~
-> import numpy
-> data = numpy.loadtxt(fname='inflammation-01.csv', delimiter=',')
-> ~~~
-> {: .language-python}
-{: .prereq}
-
+- visualisations can help us develop insights
+- this is a massive topic, but we will look at a few features of `matplotlib`
+  - _de facto_ standard
+- start by importing:
+- create a heat map of our data
 
 ~~~
 import matplotlib.pyplot
@@ -44,17 +30,11 @@ matplotlib.pyplot.show()
 ![Heat map representing the `data` variable. Each cell is colored by value along a color gradient
 from blue to yellow.](../fig/inflammation-01-imshow.svg)
 
-Each row in the heat map corresponds to a patient in the clinical trial dataset, and each column
-corresponds to a day in the dataset.  Blue pixels in this heat map represent low values, while
-yellow pixels represent high values.  As we can see, the general number of inflammation flare-ups
-for the patients rises and falls over a 40-day period.
-
-So far so good as this is in line with our knowledge of the clinical trial and Dr. Maverick's
-claims:
-
-* the patients take their medication once their inflammation flare-ups begin
-* it takes around 3 weeks for the medication to take effect and begin reducing flare-ups
-* and flare-ups appear to drop to zero by the end of the clinical trial.
+- row = patient in the dataset
+- column = day
+- blue pixels = low values
+- yellow pixels = high values
+- we can see flare-ups -> values rise and fall over 40 day period
 
 Now let's take a look at the average inflammation over time:
 
@@ -67,11 +47,9 @@ matplotlib.pyplot.show()
 
 ![A line graph showing the average inflammation across all patients over a 40-day period.](../fig/inflammation-01-average.svg)
 
-Here, we have put the average inflammation per day across all patients in the variable
-`ave_inflammation`, then asked `matplotlib.pyplot` to create and display a line graph of those
-values.  The result is a reasonably linear rise and fall, in line with Dr. Maverick's claim that
-the medication takes 3 weeks to take effect.  But a good data scientist doesn't just consider the
-average of a dataset, so let's have a look at two other statistics:
+- average inflammation per day across all patients
+- looks reasonable
+- two more stats: max and min 
 
 ~~~
 max_plot = matplotlib.pyplot.plot(numpy.max(data, axis=0))
@@ -89,22 +67,23 @@ matplotlib.pyplot.show()
 
 ![A line graph showing the minimum inflammation across all patients over a 40-day period.](../fig/inflammation-01-minimum.svg)
 
-The maximum value rises and falls linearly, while the minimum seems to be a step function.
-Neither trend seems particularly likely, so either there's a mistake in our calculations or
-something is wrong with our data. This insight would have been difficult to reach by examining
-the numbers themselves without visualization tools.
+- max is linear, min is a step function
+- seems fishy! 
+- would have been hard to tell from just looking at the values
+
 
 ### Grouping plots
-You can group similar plots in a single figure using subplots.
-This script below uses a number of new commands. The function `matplotlib.pyplot.figure()`
-creates a space into which we will place all of our plots. The parameter `figsize`
-tells Python how big to make this space. Each subplot is placed into the figure using
-its `add_subplot` [method]({{ page.root }}/reference.html#method). The `add_subplot` method takes
-3 parameters. The first denotes how many total rows of subplots there are, the second parameter
-refers to the total number of subplot columns, and the final parameter denotes which subplot
-your variable is referencing (left-to-right, top-to-bottom). Each subplot is stored in a
-different variable (`axes1`, `axes2`, `axes3`). Once a subplot is created, the axes can
-be titled using the `set_xlabel()` command (or `set_ylabel()`).
+
+- group similar plots using subplots
+- `matplotlib.pyplot.figure()` creates a space into which we will place all of our plots
+- `figsize` defines the size of the figure (in inches)
+- add subplot with `add_subplot` - params:
+  1. total rows
+  2. total columns
+  3. number of the current subplot, counting from top left-to-right, top-to-bottom
+- Each subplot is stored in a different variable (`axes1`, `axes2`, `axes3`)
+- set titles for each axis with `set_xlabel()` command (or `set_ylabel()`)
+
 Here are our three plots side by side:
 
 ~~~
@@ -137,21 +116,48 @@ matplotlib.pyplot.show()
 
 ![Three line graphs showing the daily average, maximum and minimum inflammation over a 40-day period.](../fig/inflammation-01-group-plot.svg)
 
-The [call]({{ page.root }}/reference.html#function-call) to `loadtxt` reads our data,
-and the rest of the program tells the plotting library
-how large we want the figure to be,
-that we're creating three subplots,
-what to draw for each one,
-and that we want a tight layout.
-(If we leave out that call to `fig.tight_layout()`,
-the graphs will actually be squeezed together more closely.)
+- If we leave out that call to `fig.tight_layout()`, the graphs will actually be squeezed together more closely.
+- `savefig` stores the plot as a graphics file
+- graphics format automatically determined by file ending
+  - supported formats include: svg, pdf and jpeg
 
-The call to `savefig` stores the plot as a graphics file. This can be
-a convenient way to store your plots for use in other documents, web
-pages etc. The graphics format is automatically determined by
-Matplotlib from the file name ending we specify; here PNG from
-'inflammation.png'. Matplotlib supports many different graphics
-formats, including SVG, PDF, and JPEG.
+> ## MAYBE EXERCISE: Moving Plots Around
+>
+> Modify the program to display the three plots on top of one another
+> instead of side by side.
+>
+> > ## Solution
+> > ~~~
+> > import numpy
+> > import matplotlib.pyplot
+> >
+> > data = numpy.loadtxt(fname='inflammation-01.csv', delimiter=',')
+> >
+> > # change figsize (swap width and height)
+> > fig = matplotlib.pyplot.figure(figsize=(3.0, 10.0))
+> >
+> > # change add_subplot (swap first two parameters)
+> > axes1 = fig.add_subplot(3, 1, 1)
+> > axes2 = fig.add_subplot(3, 1, 2)
+> > axes3 = fig.add_subplot(3, 1, 3)
+> >
+> > axes1.set_ylabel('average')
+> > axes1.plot(numpy.mean(data, axis=0))
+> >
+> > axes2.set_ylabel('max')
+> > axes2.plot(numpy.max(data, axis=0))
+> >
+> > axes3.set_ylabel('min')
+> > axes3.plot(numpy.min(data, axis=0))
+> >
+> > fig.tight_layout()
+> >
+> > matplotlib.pyplot.show()
+> > ~~~
+> > {: .language-python}
+> {: .solution}
+{: .challenge}
+
 
 > ## Importing libraries with shortcuts
 >
@@ -175,7 +181,7 @@ formats, including SVG, PDF, and JPEG.
 > is important you agree on how libraries are imported.
 {: .callout}
 
-> ## Plot Scaling
+> ## INFO: Plot Scaling
 >
 > Why do all of our plots stop just short of the upper end of our graph?
 >
@@ -217,7 +223,7 @@ formats, including SVG, PDF, and JPEG.
 > {: .solution}
 {: .challenge}
 
-> ## Drawing Straight Lines
+> ## INFO: Drawing Straight Lines
 >
 > In the center and right subplots above, we expect all lines to look like step functions because
 > non-integer value are not realistic for the minimum and maximum values. However, you can see
@@ -259,7 +265,7 @@ formats, including SVG, PDF, and JPEG.
 > {: .solution}
 {: .challenge}
 
-> ## Make Your Own Plot
+> ## MAYBE EXERCISE: Make Your Own Plot
 >
 > Create a plot showing the standard deviation (`numpy.std`)
 > of the inflammation data for each day across all patients.
@@ -267,43 +273,6 @@ formats, including SVG, PDF, and JPEG.
 > > ## Solution
 > > ~~~
 > > std_plot = matplotlib.pyplot.plot(numpy.std(data, axis=0))
-> > matplotlib.pyplot.show()
-> > ~~~
-> > {: .language-python}
-> {: .solution}
-{: .challenge}
-
-> ## Moving Plots Around
->
-> Modify the program to display the three plots on top of one another
-> instead of side by side.
->
-> > ## Solution
-> > ~~~
-> > import numpy
-> > import matplotlib.pyplot
-> >
-> > data = numpy.loadtxt(fname='inflammation-01.csv', delimiter=',')
-> >
-> > # change figsize (swap width and height)
-> > fig = matplotlib.pyplot.figure(figsize=(3.0, 10.0))
-> >
-> > # change add_subplot (swap first two parameters)
-> > axes1 = fig.add_subplot(3, 1, 1)
-> > axes2 = fig.add_subplot(3, 1, 2)
-> > axes3 = fig.add_subplot(3, 1, 3)
-> >
-> > axes1.set_ylabel('average')
-> > axes1.plot(numpy.mean(data, axis=0))
-> >
-> > axes2.set_ylabel('max')
-> > axes2.plot(numpy.max(data, axis=0))
-> >
-> > axes3.set_ylabel('min')
-> > axes3.plot(numpy.min(data, axis=0))
-> >
-> > fig.tight_layout()
-> >
 > > matplotlib.pyplot.show()
 > > ~~~
 > > {: .language-python}
