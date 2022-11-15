@@ -21,7 +21,13 @@ keypoints:
 
 ## Recap of yesterday
 
-**TODO**
+- data types: int, float, string
+- lists
+- load data with numpy
+- slicing lists, strings and arrays
+- plot data with matplotlib
+- iterate over things, using loops 
+- **revisit jupyter controls and markdown!**
 
 
 ## Today:
