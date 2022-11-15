@@ -19,11 +19,14 @@ keypoints:
 - "`True` and `False` represent truth values."
 ---
 
-In our last lesson, we discovered something suspicious was going on
-in our inflammation data by drawing some plots.
-How can we use Python to automatically recognize the different features we saw,
-and take a different action for each? In this lesson, we'll learn how to write code that
-runs only when certain conditions are true.
+## Recap of yesterday
+
+**TODO**
+
+
+## Today:
+
+- how can we write code that only runs when certain conditions are true? 
 
 ## Conditionals
 
@@ -45,19 +48,7 @@ done
 ~~~
 {: .output}
 
-The second line of this code uses the keyword `if` to tell Python that we want to make a choice.
-If the test that follows the `if` statement is true,
-the body of the `if`
-(i.e., the set of lines indented underneath it) is executed, and "greater" is printed.
-If the test is false,
-the body of the `else` is executed instead, and "not greater" is printed.
-Only one or the other is ever executed before continuing on with program execution to print "done":
-
-![A flowchart diagram of the if-else construct that tests if variable num is greater than 100](../fig/python-flowchart-conditional.png)
-
-Conditional statements don't have to include an `else`.
-If there isn't one,
-Python simply does nothing if the test is false:
+- else is not mandatory
 
 ~~~
 num = 53
@@ -74,9 +65,8 @@ before conditional...
 ~~~
 {: .output}
 
-We can also chain several tests together using `elif`,
-which is short for "else if".
-The following Python code uses `elif` to print the sign of a number.
+
+- combine several tests, using `elif` (else if)
 
 ~~~
 num = -3
@@ -110,6 +100,37 @@ rather than a single equals sign `=` which is used to assign values.
 > - `>=`: greater than or equal to
 > - `<=`: less than or equal to
 {: .callout}
+
+
+> ## How Many Paths?
+>
+> Consider this code:
+>
+> ~~~
+> if 4 > 5:
+>     print('A')
+> elif 4 == 5:
+>     print('B')
+> elif 4 < 5:
+>     print('C')
+> ~~~
+> {: .language-python}
+>
+> Which of the following would be printed if you were to run this code?
+> Why did you pick this answer?
+>
+> 1.  A
+> 2.  B
+> 3.  C
+> 4.  B and C
+>
+> > ## Solution
+> > C gets printed because the first two conditions, `4 > 5` and `4 == 5`, are not true,
+> > but `4 < 5` is true.
+> {: .solution}
+{: .challenge}
+
+
 
 We can also combine tests using `and` and `or`.
 `and` is only true if both parts are true:
@@ -145,6 +166,134 @@ at least one test is true
 > which represent truth values. A statement such as `1 < 0` returns
 > the value `False`, while `-1 < 0` returns the value `True`.
 {: .callout}
+
+> ## INFO: What Is Truth?
+>
+> `True` and `False` booleans are not the only values in Python that are true and false.
+> In fact, *any* value can be used in an `if` or `elif`.
+> After reading and running the code below,
+> explain what the rule is for which values are considered true and which are considered false.
+>
+> ~~~
+> if '':
+>     print('empty string is true')
+> if 'word':
+>     print('word is true')
+> if []:
+>     print('empty list is true')
+> if [1, 2, 3]:
+>     print('non-empty list is true')
+> if 0:
+>     print('zero is true')
+> if 1:
+>     print('one is true')
+> ~~~
+> {: .language-python}
+{: .challenge}
+
+> ## INFO: That's Not Not What I Meant
+>
+> Sometimes it is useful to check whether some condition is not true.
+> The Boolean operator `not` can do this explicitly.
+> After reading and running the code below,
+> write some `if` statements that use `not` to test the rule
+> that you formulated in the previous challenge.
+>
+> ~~~
+> if not '':
+>     print('empty string is not true')
+> if not 'word':
+>     print('word is not true')
+> if not not True:
+>     print('not not True is true')
+> ~~~
+> {: .language-python}
+{: .challenge}
+
+> ## BONUS: float comparison
+> make something up on the fly
+> demo how we can implement a "close enough" 
+> demo numpy.isclose 
+{: .callout}
+
+
+> ## Sorting a List Into Buckets
+>
+> In our `data` folder, large data sets are stored in files whose names start with
+> "inflammation-" and small data sets -- in files whose names start with "small-". We
+> also have some other files that we do not care about at this point. We'd like to break all
+> these files into three lists called `large_files`, `small_files`, and `other_files`,
+> respectively.
+>
+> Add code to the template below to do this. Note that the string method
+> [`startswith`](https://docs.python.org/3/library/stdtypes.html#str.startswith)
+> returns `True` if and only if the string it is called on starts with the string
+> passed as an argument, that is:
+>
+> ~~~
+> 'String'.startswith('Str')
+> ~~~
+> {: .language-python}
+> ~~~
+> True
+> ~~~
+> {: .output}
+> But
+> ~~~
+> 'String'.startswith('str')
+> ~~~
+> {: .language-python}
+> ~~~
+> False
+> ~~~
+> {: .output}
+>Use the following Python code as your starting point:
+> ~~~
+> filenames = ['inflammation-01.csv',
+>          'myscript.py',
+>          'inflammation-02.csv',
+>          'small-01.csv',
+>          'small-02.csv']
+> large_files = []
+> small_files = []
+> other_files = []
+> ~~~
+> {: .language-python}
+>
+> Your solution should:
+>
+> 1.  loop over the names of the files
+> 2.  figure out which group each filename belongs in
+> 3.  append the filename to that list
+>
+> In the end the three lists should be:
+>
+> ~~~
+> large_files = ['inflammation-01.csv', 'inflammation-02.csv']
+> small_files = ['small-01.csv', 'small-02.csv']
+> other_files = ['myscript.py']
+> ~~~
+> {: .language-python}
+>
+> > ## Solution
+> > ~~~
+> > for filename in filenames:
+> >     if filename.startswith('inflammation-'):
+> >         large_files.append(filename)
+> >     elif filename.startswith('small-'):
+> >         small_files.append(filename)
+> >     else:
+> >         other_files.append(filename)
+> >
+> > print('large_files:', large_files)
+> > print('small_files:', small_files)
+> > print('other_files:', other_files)
+> > ~~~
+> > {: .language-python}
+> {: .solution}
+{: .challenge}
+
+
 
 ## Checking our Data
 
@@ -243,78 +392,8 @@ but we could also imagine not using the `else` catch-all
 so that messages are only printed when something is wrong,
 freeing us from having to manually examine every plot for features we've seen before.
 
-> ## How Many Paths?
->
-> Consider this code:
->
-> ~~~
-> if 4 > 5:
->     print('A')
-> elif 4 == 5:
->     print('B')
-> elif 4 < 5:
->     print('C')
-> ~~~
-> {: .language-python}
->
-> Which of the following would be printed if you were to run this code?
-> Why did you pick this answer?
->
-> 1.  A
-> 2.  B
-> 3.  C
-> 4.  B and C
->
-> > ## Solution
-> > C gets printed because the first two conditions, `4 > 5` and `4 == 5`, are not true,
-> > but `4 < 5` is true.
-> {: .solution}
-{: .challenge}
 
-> ## What Is Truth?
->
-> `True` and `False` booleans are not the only values in Python that are true and false.
-> In fact, *any* value can be used in an `if` or `elif`.
-> After reading and running the code below,
-> explain what the rule is for which values are considered true and which are considered false.
->
-> ~~~
-> if '':
->     print('empty string is true')
-> if 'word':
->     print('word is true')
-> if []:
->     print('empty list is true')
-> if [1, 2, 3]:
->     print('non-empty list is true')
-> if 0:
->     print('zero is true')
-> if 1:
->     print('one is true')
-> ~~~
-> {: .language-python}
-{: .challenge}
-
-> ## That's Not Not What I Meant
->
-> Sometimes it is useful to check whether some condition is not true.
-> The Boolean operator `not` can do this explicitly.
-> After reading and running the code below,
-> write some `if` statements that use `not` to test the rule
-> that you formulated in the previous challenge.
->
-> ~~~
-> if not '':
->     print('empty string is not true')
-> if not 'word':
->     print('word is not true')
-> if not not True:
->     print('not not True is true')
-> ~~~
-> {: .language-python}
-{: .challenge}
-
-> ## Close Enough
+> ## INFO: Close Enough
 >
 > Write some conditions that print `True` if the variable `a` is within 10% of the variable `b`
 > and `False` otherwise.
@@ -358,7 +437,7 @@ freeing us from having to manually examine every plot for features we've seen be
 > {: .solution}
 {: .challenge}
 
-> ## In-Place Operators
+> ## INFO: In-Place Operators
 >
 > Python (and most other languages in the C family) provides
 > [in-place operators]({{ page.root }}/reference.html#in-place-operators)
@@ -404,83 +483,9 @@ freeing us from having to manually examine every plot for features we've seen be
 > {: .solution}
 {: .challenge}
 
-> ## Sorting a List Into Buckets
->
-> In our `data` folder, large data sets are stored in files whose names start with
-> "inflammation-" and small data sets -- in files whose names start with "small-". We
-> also have some other files that we do not care about at this point. We'd like to break all
-> these files into three lists called `large_files`, `small_files`, and `other_files`,
-> respectively.
->
-> Add code to the template below to do this. Note that the string method
-> [`startswith`](https://docs.python.org/3/library/stdtypes.html#str.startswith)
-> returns `True` if and only if the string it is called on starts with the string
-> passed as an argument, that is:
->
-> ~~~
-> 'String'.startswith('Str')
-> ~~~
-> {: .language-python}
-> ~~~
-> True
-> ~~~
-> {: .output}
-> But
-> ~~~
-> 'String'.startswith('str')
-> ~~~
-> {: .language-python}
-> ~~~
-> False
-> ~~~
-> {: .output}
->Use the following Python code as your starting point:
-> ~~~
-> filenames = ['inflammation-01.csv',
->          'myscript.py',
->          'inflammation-02.csv',
->          'small-01.csv',
->          'small-02.csv']
-> large_files = []
-> small_files = []
-> other_files = []
-> ~~~
-> {: .language-python}
->
-> Your solution should:
->
-> 1.  loop over the names of the files
-> 2.  figure out which group each filename belongs in
-> 3.  append the filename to that list
->
-> In the end the three lists should be:
->
-> ~~~
-> large_files = ['inflammation-01.csv', 'inflammation-02.csv']
-> small_files = ['small-01.csv', 'small-02.csv']
-> other_files = ['myscript.py']
-> ~~~
-> {: .language-python}
->
-> > ## Solution
-> > ~~~
-> > for filename in filenames:
-> >     if filename.startswith('inflammation-'):
-> >         large_files.append(filename)
-> >     elif filename.startswith('small-'):
-> >         small_files.append(filename)
-> >     else:
-> >         other_files.append(filename)
-> >
-> > print('large_files:', large_files)
-> > print('small_files:', small_files)
-> > print('other_files:', other_files)
-> > ~~~
-> > {: .language-python}
-> {: .solution}
-{: .challenge}
 
-> ## Counting Vowels
+
+> ## INFO: Counting Vowels
 >
 > 1. Write a loop that counts the number of vowels in a character string.
 > 2. Test it on a few individual words and full sentences.

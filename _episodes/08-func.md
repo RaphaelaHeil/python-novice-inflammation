@@ -31,21 +31,12 @@ keypoints:
    then call it with different parameter values to customize its behavior."
 ---
 
-At this point,
-we've written code to draw some interesting features in our inflammation data,
-loop over all our data files to quickly draw these plots for each of them,
-and have Python make decisions based on what it sees in our data.
-But, our code is getting pretty long and complicated;
-what if we had thousands of datasets,
-and didn't want to generate a figure for every single one?
-Commenting out the figure-drawing code is a nuisance.
-Also, what if we want to use that code again,
-on a different dataset or at a different point in our program?
-Cutting and pasting it is going to make our code get very long and very repetitive,
-very quickly.
-We'd like a way to package our code so that it is easier to reuse,
-and Python provides for this by letting us define things called 'functions' ---
-a shorthand way of re-executing longer pieces of code.
+- we've written a lot of code
+- starts getting long and complicated and we are repeating a lot of things, even though we have loops and conditionals
+- potentially cutting and pasting code around
+- let's package our code into functions, so that we can use it similar to the functions we have seen so far
+- maybe share your functions with colleagues, etc. 
+
 Let's start by defining a function `fahr_to_celsius` that converts temperatures
 from Fahrenheit to Celsius:
 
@@ -57,19 +48,14 @@ def fahr_to_celsius(temp):
 
 ![Labeled parts of a Python function definition](../fig/python-function.svg)
 
+- keyword `def`
+- function name
+- parentheses
+- list of parameter names
+- colon
+- body indented
+- `return` keyword
 
-The function definition opens with the keyword `def` followed by the
-name of the function (`fahr_to_celsius`) and a parenthesized list of parameter names (`temp`). The
-[body]({{ page.root }}/reference.html#body) of the function --- the
-statements that are executed when it runs --- is indented below the
-definition line.  The body concludes with a `return` keyword followed by the return value.
-
-When we call the function,
-the values we pass to it are assigned to those variables
-so that we can use them inside the function.
-Inside the function,
-we use a [return statement]({{ page.root }}/reference.html#return-statement) to send a result
-back to whoever asked for it.
 
 Let's try running our function.
 
@@ -136,12 +122,76 @@ boiling point of water in Kelvin: 373.15
 ~~~
 {: .output}
 
-This is our first taste of how larger programs are built:
-we define basic operations,
-then combine them in ever-larger chunks to get the effect we want.
-Real-life functions will usually be larger than the ones shown here --- typically half a dozen
-to a few dozen lines --- but they shouldn't ever be much longer than that,
-or the next person who reads it won't be able to understand what's going on.
+- functions are our building blocks for larger programs
+- try to keep your functions focused on one thing
+- try to use descriptive names
+- code is read more often than written
+- help your future self in understanding the code
+
+> ## EXERCISE: Combining Strings
+>
+> "Adding" two strings produces their concatenation:
+> `'a' + 'b'` is `'ab'`.
+> Write a function called `fence` that takes two parameters called `original` and `wrapper`
+> and returns a new string that has the wrapper character at the beginning and end of the original.
+> A call to your function should look like this:
+>
+> ~~~
+> print(fence('name', '*'))
+> ~~~
+> {: .language-python}
+>
+> ~~~
+> *name*
+> ~~~
+> {: .output}
+>
+> > ## Solution
+> > ~~~
+> > def fence(original, wrapper):
+> >     return wrapper + original + wrapper
+> > ~~~
+> > {: .language-python}
+> {: .solution}
+{: .challenge}
+
+> ## INFO: Return versus print
+>
+> Note that `return` and `print` are not interchangeable.
+> `print` is a Python function that *prints* data to the screen.
+> It enables us, *users*, see the data.
+> `return` statement, on the other hand, makes data visible to the program.
+> Let's have a look at the following function:
+>
+> ~~~
+> def add(a, b):
+>     print(a + b)
+> ~~~
+> {: .language-python}
+>
+> **Question**: What will we see if we execute the following commands?
+> ~~~
+> A = add(7, 3)
+> print(A)
+> ~~~
+> {: .language-python}
+>
+> > ## Solution
+> > Python will first execute the function `add` with `a = 7` and `b = 3`,
+> > and, therefore, print `10`. However, because function `add` does not have a
+> > line that starts with `return` (no `return` "statement"), it will, by default, return
+> > nothing which, in Python world, is called `None`. Therefore, `A` will be assigned to `None`
+> > and the last line (`print(A)`) will print `None`. As a result, we will see:
+> > ~~~
+> > 10
+> > None
+> > ~~~
+> > {: .output}
+> {: .solution}
+{: .challenge}
+
+
+
 
 ## Variable Scope
 
@@ -661,248 +711,7 @@ first item in the list, but if we want the `','` to be assigned to the variable 
 we *do* have to provide `delimiter=` for the second parameter since `delimiter` is not
 the second parameter in the list.
 
-## Readable functions
-
-Consider these two functions:
-
-~~~
-def s(p):
-    a = 0
-    for v in p:
-        a += v
-    m = a / len(p)
-    d = 0
-    for v in p:
-        d += (v - m) * (v - m)
-    return numpy.sqrt(d / (len(p) - 1))
-
-def std_dev(sample):
-    sample_sum = 0
-    for value in sample:
-        sample_sum += value
-
-    sample_mean = sample_sum / len(sample)
-
-    sum_squared_devs = 0
-    for value in sample:
-        sum_squared_devs += (value - sample_mean) * (value - sample_mean)
-
-    return numpy.sqrt(sum_squared_devs / (len(sample) - 1))
-~~~
-{: .language-python}
-
-The functions `s` and `std_dev` are computationally equivalent (they
-both calculate the sample standard deviation), but to a human reader,
-they look very different. You probably found `std_dev` much easier to
-read and understand than `s`.
-
-As this example illustrates, both documentation and a programmer's
-_coding style_ combine to determine how easy it is for others to read
-and understand the programmer's code. Choosing meaningful variable
-names and using blank spaces to break the code into logical "chunks"
-are helpful techniques for producing _readable code_. This is useful
-not only for sharing code with others, but also for the original
-programmer. If you need to revisit code that you wrote months ago and
-haven't thought about since then, you will appreciate the value of
-readable code!
-
-> ## Combining Strings
->
-> "Adding" two strings produces their concatenation:
-> `'a' + 'b'` is `'ab'`.
-> Write a function called `fence` that takes two parameters called `original` and `wrapper`
-> and returns a new string that has the wrapper character at the beginning and end of the original.
-> A call to your function should look like this:
->
-> ~~~
-> print(fence('name', '*'))
-> ~~~
-> {: .language-python}
->
-> ~~~
-> *name*
-> ~~~
-> {: .output}
->
-> > ## Solution
-> > ~~~
-> > def fence(original, wrapper):
-> >     return wrapper + original + wrapper
-> > ~~~
-> > {: .language-python}
-> {: .solution}
-{: .challenge}
-
-> ## Return versus print
->
-> Note that `return` and `print` are not interchangeable.
-> `print` is a Python function that *prints* data to the screen.
-> It enables us, *users*, see the data.
-> `return` statement, on the other hand, makes data visible to the program.
-> Let's have a look at the following function:
->
-> ~~~
-> def add(a, b):
->     print(a + b)
-> ~~~
-> {: .language-python}
->
-> **Question**: What will we see if we execute the following commands?
-> ~~~
-> A = add(7, 3)
-> print(A)
-> ~~~
-> {: .language-python}
->
-> > ## Solution
-> > Python will first execute the function `add` with `a = 7` and `b = 3`,
-> > and, therefore, print `10`. However, because function `add` does not have a
-> > line that starts with `return` (no `return` "statement"), it will, by default, return
-> > nothing which, in Python world, is called `None`. Therefore, `A` will be assigned to `None`
-> > and the last line (`print(A)`) will print `None`. As a result, we will see:
-> > ~~~
-> > 10
-> > None
-> > ~~~
-> > {: .output}
-> {: .solution}
-{: .challenge}
-
-> ## Selecting Characters From Strings
->
-> If the variable `s` refers to a string,
-> then `s[0]` is the string's first character
-> and `s[-1]` is its last.
-> Write a function called `outer`
-> that returns a string made up of just the first and last characters of its input.
-> A call to your function should look like this:
->
-> ~~~
-> print(outer('helium'))
-> ~~~
-> {: .language-python}
->
-> ~~~
-> hm
-> ~~~
-> {: .output}
->
-> > ## Solution
-> > ~~~
-> > def outer(input_string):
-> >     return input_string[0] + input_string[-1]
-> > ~~~
-> > {: .language-python}
-> {: .solution}
-{: .challenge}
-
-> ## Rescaling an Array
->
-> Write a function `rescale` that takes an array as input
-> and returns a corresponding array of values scaled to lie in the range 0.0 to 1.0.
-> (Hint: If `L` and `H` are the lowest and highest values in the original array,
-> then the replacement for a value `v` should be `(v-L) / (H-L)`.)
->
-> > ## Solution
-> > ~~~
-> > def rescale(input_array):
-> >     L = numpy.min(input_array)
-> >     H = numpy.max(input_array)
-> >     output_array = (input_array - L) / (H - L)
-> >     return output_array
-> > ~~~
-> > {: .language-python}
-> {: .solution}
-{: .challenge}
-
-> ## Testing and Documenting Your Function
->
-> Run the commands `help(numpy.arange)` and `help(numpy.linspace)`
-> to see how to use these functions to generate regularly-spaced values,
-> then use those values to test your `rescale` function.
-> Once you've successfully tested your function,
-> add a docstring that explains what it does.
->
-> > ## Solution
-> > ~~~
-> > """Takes an array as input, and returns a corresponding array scaled so
-> > that 0 corresponds to the minimum and 1 to the maximum value of the input array.
-> >
-> > Examples:
-> > >>> rescale(numpy.arange(10.0))
-> > array([ 0.        ,  0.11111111,  0.22222222,  0.33333333,  0.44444444,
-> >        0.55555556,  0.66666667,  0.77777778,  0.88888889,  1.        ])
-> > >>> rescale(numpy.linspace(0, 100, 5))
-> > array([ 0.  ,  0.25,  0.5 ,  0.75,  1.  ])
-> > """
-> > ~~~
-> > {: .language-python}
-> {: .solution}
-{: .challenge}
-
-> ## Defining Defaults
->
-> Rewrite the `rescale` function so that it scales data to lie between `0.0` and `1.0` by default,
-> but will allow the caller to specify lower and upper bounds if they want.
-> Compare your implementation to your neighbor's:
-> do the two functions always behave the same way?
->
-> > ## Solution
-> > ~~~
-> > def rescale(input_array, low_val=0.0, high_val=1.0):
-> >     """rescales input array values to lie between low_val and high_val"""
-> >     L = numpy.min(input_array)
-> >     H = numpy.max(input_array)
-> >     intermed_array = (input_array - L) / (H - L)
-> >     output_array = intermed_array * (high_val - low_val) + low_val
-> >     return output_array
-> > ~~~
-> > {: .language-python}
-> {: .solution}
-{: .challenge}
-
-> ## Variables Inside and Outside Functions
->
-> What does the following piece of code display when run --- and why?
->
-> ~~~
-> f = 0
-> k = 0
->
-> def f2k(f):
->     k = ((f - 32) * (5.0 / 9.0)) + 273.15
->     return k
->
-> print(f2k(8))
-> print(f2k(41))
-> print(f2k(32))
->
-> print(k)
-> ~~~
-> {: .language-python}
->
-> > ## Solution
-> >
-> > ~~~
-> > 259.81666666666666
-> > 278.15
-> > 273.15
-> > 0
-> > ~~~
-> > {: .output}
-> > `k` is 0 because the `k` inside the function `f2k` doesn't know
-> > about the `k` defined outside the function. When the `f2k` function is called, 
-> > it creates a [local variable]({{ page.root }}/reference.html#local-variable)
-> > `k`. The function does not return any values 
-> > and does not alter `k` outside of its local copy. 
-> > Therefore the original value of `k` remains unchanged.
-> > Beware that a local `k` is created because `f2k` internal statements
-> > *affect* a new value to it. If `k` was only `read`, it would simply retrieve the
-> > global `k` value.
-> {: .solution}
-{: .challenge}
-
-> ## Mixing Default and Non-Default Parameters
+> ## EXERCISE: Mixing Default and Non-Default Parameters
 >
 > Given the following code:
 >
@@ -951,12 +760,196 @@ readable code!
 > {: .solution}
 {: .challenge}
 
-> ## Readable Code
+
+## Readable functions
+
+Consider these two functions:
+
+~~~
+def s(p):
+    a = 0
+    for v in p:
+        a += v
+    m = a / len(p)
+    d = 0
+    for v in p:
+        d += (v - m) * (v - m)
+    return numpy.sqrt(d / (len(p) - 1))
+
+def std_dev(sample):
+    sample_sum = 0
+    for value in sample:
+        sample_sum += value
+
+    sample_mean = sample_sum / len(sample)
+
+    sum_squared_devs = 0
+    for value in sample:
+        sum_squared_devs += (value - sample_mean) * (value - sample_mean)
+
+    return numpy.sqrt(sum_squared_devs / (len(sample) - 1))
+~~~
+{: .language-python}
+
+The functions `s` and `std_dev` are computationally equivalent (they
+both calculate the sample standard deviation), but to a human reader,
+they look very different. You probably found `std_dev` much easier to
+read and understand than `s`.
+
+As this example illustrates, both documentation and a programmer's
+_coding style_ combine to determine how easy it is for others to read
+and understand the programmer's code. Choosing meaningful variable
+names and using blank spaces to break the code into logical "chunks"
+are helpful techniques for producing _readable code_. This is useful
+not only for sharing code with others, but also for the original
+programmer. If you need to revisit code that you wrote months ago and
+haven't thought about since then, you will appreciate the value of
+readable code!
+
+
+
+> ## BREAKOUT: Selecting Characters From Strings
+>
+> If the variable `s` refers to a string,
+> then `s[0]` is the string's first character
+> and `s[-1]` is its last.
+> Write a function called `outer`
+> that returns a string made up of just the first and last characters of its input.
+> A call to your function should look like this:
+>
+> ~~~
+> print(outer('helium'))
+> ~~~
+> {: .language-python}
+>
+> ~~~
+> hm
+> ~~~
+> {: .output}
+>
+> > ## Solution
+> > ~~~
+> > def outer(input_string):
+> >     return input_string[0] + input_string[-1]
+> > ~~~
+> > {: .language-python}
+> {: .solution}
+{: .challenge}
+
+> ## BREAKOUT: Rescaling an Array
+>
+> Write a function `rescale` that takes an array as input
+> and returns a corresponding array of values scaled to lie in the range 0.0 to 1.0.
+> (Hint: If `L` and `H` are the lowest and highest values in the original array,
+> then the replacement for a value `v` should be `(v-L) / (H-L)`.)
+>
+> > ## Solution
+> > ~~~
+> > def rescale(input_array):
+> >     L = numpy.min(input_array)
+> >     H = numpy.max(input_array)
+> >     output_array = (input_array - L) / (H - L)
+> >     return output_array
+> > ~~~
+> > {: .language-python}
+> {: .solution}
+{: .challenge}
+
+> ## BREAKOUT: Readable Code
 >
 > Revise a function you wrote for one of the previous exercises to try to make
 > the code more readable. Then, collaborate with one of your neighbors
 > to critique each other's functions and discuss how your function implementations
 > could be further improved to make them more readable.
 {: .challenge}
+
+> ## INFO: Testing and Documenting Your Function
+>
+> Run the commands `help(numpy.arange)` and `help(numpy.linspace)`
+> to see how to use these functions to generate regularly-spaced values,
+> then use those values to test your `rescale` function.
+> Once you've successfully tested your function,
+> add a docstring that explains what it does.
+>
+> > ## Solution
+> > ~~~
+> > """Takes an array as input, and returns a corresponding array scaled so
+> > that 0 corresponds to the minimum and 1 to the maximum value of the input array.
+> >
+> > Examples:
+> > >>> rescale(numpy.arange(10.0))
+> > array([ 0.        ,  0.11111111,  0.22222222,  0.33333333,  0.44444444,
+> >        0.55555556,  0.66666667,  0.77777778,  0.88888889,  1.        ])
+> > >>> rescale(numpy.linspace(0, 100, 5))
+> > array([ 0.  ,  0.25,  0.5 ,  0.75,  1.  ])
+> > """
+> > ~~~
+> > {: .language-python}
+> {: .solution}
+{: .challenge}
+
+> ## INFO: Defining Defaults
+>
+> Rewrite the `rescale` function so that it scales data to lie between `0.0` and `1.0` by default,
+> but will allow the caller to specify lower and upper bounds if they want.
+> Compare your implementation to your neighbor's:
+> do the two functions always behave the same way?
+>
+> > ## Solution
+> > ~~~
+> > def rescale(input_array, low_val=0.0, high_val=1.0):
+> >     """rescales input array values to lie between low_val and high_val"""
+> >     L = numpy.min(input_array)
+> >     H = numpy.max(input_array)
+> >     intermed_array = (input_array - L) / (H - L)
+> >     output_array = intermed_array * (high_val - low_val) + low_val
+> >     return output_array
+> > ~~~
+> > {: .language-python}
+> {: .solution}
+{: .challenge}
+
+> ## INFO: Variables Inside and Outside Functions
+>
+> What does the following piece of code display when run --- and why?
+>
+> ~~~
+> f = 0
+> k = 0
+>
+> def f2k(f):
+>     k = ((f - 32) * (5.0 / 9.0)) + 273.15
+>     return k
+>
+> print(f2k(8))
+> print(f2k(41))
+> print(f2k(32))
+>
+> print(k)
+> ~~~
+> {: .language-python}
+>
+> > ## Solution
+> >
+> > ~~~
+> > 259.81666666666666
+> > 278.15
+> > 273.15
+> > 0
+> > ~~~
+> > {: .output}
+> > `k` is 0 because the `k` inside the function `f2k` doesn't know
+> > about the `k` defined outside the function. When the `f2k` function is called, 
+> > it creates a [local variable]({{ page.root }}/reference.html#local-variable)
+> > `k`. The function does not return any values 
+> > and does not alter `k` outside of its local copy. 
+> > Therefore the original value of `k` remains unchanged.
+> > Beware that a local `k` is created because `f2k` internal statements
+> > *affect* a new value to it. If `k` was only `read`, it would simply retrieve the
+> > global `k` value.
+> {: .solution}
+{: .challenge}
+
+
 
 {% include links.md %}
